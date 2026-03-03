@@ -124,7 +124,7 @@ export default function Home() {
       className="text-6xl md:text-8xl font-extrabold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white"
     >
       Aayush
-      <span className="block text-white/40 mt-2 md:mt-4  md:text-7xl tracking-tight">
+      <span className="block text-white/40 mt-2 tracking-tight">
         Singh
       </span>
     </motion.h1>
@@ -136,7 +136,7 @@ export default function Home() {
       transition={{ delay: 0.4 }}
       className="text-white/50 text-lg md:text-xl mt-6 max-w-md leading-relaxed"
     >
-      I build <span className="text-red-400 font-semibold">interactive websites</span> and <span className="text-blue-400 font-semibold">modern web apps</span> using cutting-edge technologies.
+      I build <span className="text-red-600 font-semibold">interactive websites</span> and <span className="text-blue-400 font-semibold">modern web apps</span> using cutting-edge technologies.
     </motion.p>
 
     {/* Social Links */}
