@@ -8,29 +8,31 @@ import {
   MapPin, User, Briefcase, GraduationCap,
   Heart, Sparkles, BookOpen, Coffee
 } from "lucide-react";
-import { useState, useEffect, useRef, RefObject } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   // Create refs for each section
-const homeRef = useRef<HTMLElement>(null);
-const aboutRef = useRef<HTMLElement>(null);
-const workRef = useRef<HTMLElement>(null);
-const skillsRef = useRef<HTMLElement>(null);
-const contactRef = useRef<HTMLElement>(null);
+  const homeRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const workRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
 
-// Update your scrollToSection function:
-const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
-  if (sectionRef?.current) {
-    sectionRef.current.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-};
+  const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
+    if (sectionRef?.current) {
+      sectionRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    setMobileMenuOpen(false);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -38,6 +40,17 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
 
   const skills = [
     { name: "Java", icon: <Terminal size={20} /> },
@@ -54,77 +67,117 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
       description: "Full-stack reservation platform with real-time availability and secure payments.",
       tech: ["Java", "Springtool", "pgadmin4"],
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      link: "#",
     },
     {
       title: "3D Portfolio",
       description: "Interactive portfolio with 3D elements and smooth scroll animations.",
       tech: ["Next.js", "Three.js", "Framer"],
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      link: "#",
     },
     {
       title: "E-Commerce App",
       description: "Modern shopping platform with cart, auth, and payment integration.",
       tech: ["React", "Redux", "Stripe"],
       image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      link: "#",
     },
     {
-      title: "Esport WebSite ",
+      title: "Esport WebSite",
       description: "Collaborative with real-time updates and team features.",
       tech: ["html", "css", "js"],
       image: "https://wallpapercrafter.com/th8006/1522652-Video-Game-Fnatic-Esports-Gaming-Team-1080P.jpg",
+      link: "https://aayushpratapsingh.github.io/ESPORT-WTF-WEBSITE/",
     }
   ];
 
   return (
     <main className="bg-[#0a0a0a] text-white min-h-screen overflow-x-hidden scroll-smooth relative w-full max-w-[100vw]">
       
-      {/* Floating background blobs */}
-      <div className="fixed top-[-100px] left-[-100px] w-[400px] h-[400px] bg-linear-to-r from-white/5 to-transparent rounded-full blur-3xl pointer-events-none overflow-hidden"></div>
-      <div className="fixed bottom-[-150px] right-[-150px] w-[500px] h-[500px] bg-gradient-to-r from-white/5 to-transparent rounded-full blur-3xl pointer-events-none overflow-hidden"></div>
+      {/* Floating background blobs - responsive sizes */}
+      <div className="fixed top-[-50px] left-[-50px] sm:top-[-100px] sm:left-[-100px] w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] bg-gradient-to-r from-white/5 to-transparent rounded-full blur-3xl pointer-events-none overflow-hidden"></div>
+      <div className="fixed bottom-[-80px] right-[-80px] sm:bottom-[-150px] sm:right-[-150px] w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-gradient-to-r from-white/5 to-transparent rounded-full blur-3xl pointer-events-none overflow-hidden"></div>
 
-     {/* NAVIGATION */}
-<nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-black/80 backdrop-blur-md py-3 border-b border-white/5" : "bg-transparent py-5"}`}>
-  <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-    <motion.button
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="text-lg font-light tracking-wider cursor-pointer bg-transparent border-none p-0"
-      onClick={() => scrollToSection(homeRef)}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <span className="text-white/90">Aayush</span>
-      <span className="text-white/30 ml-2">Singh</span>
-    </motion.button>
-
-    <div className="hidden md:flex items-center gap-8">
-      {[
-        { name: "Home", ref: homeRef },
-        { name: "About", ref: aboutRef },
-        { name: "Work", ref: workRef },
-        { name: "Skills", ref: skillsRef },
-        { name: "Contact", ref: contactRef }
-      ].map((item, index) => {
-        // Create a properly typed ref for each item
-        const typedRef = item.ref as React.RefObject<HTMLElement>;
-        return (
+      {/* NAVIGATION - Fixed */}
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-black/80 backdrop-blur-md py-2 sm:py-3 border-b border-white/5" : "bg-transparent py-3 sm:py-5"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           <motion.button
-            key={item.name}
-            onClick={() => scrollToSection(typedRef)}
-            className="text-sm text-white/40 hover:text-white/90 transition-colors bg-transparent border-none cursor-pointer"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ scale: 1.1 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-base sm:text-lg font-light tracking-wider cursor-pointer bg-transparent border-none p-2 sm:p-0"
+            onClick={() => scrollToSection(homeRef)}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {item.name}
+            <span className="text-white/90">Aayush</span>
+            <span className="text-white/30 ml-1 sm:ml-2">Singh</span>
           </motion.button>
-        );
-      })}
-    </div>
-  </div>
-</nav>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {[
+              { name: "Home", ref: homeRef },
+              { name: "About", ref: aboutRef },
+              { name: "Work", ref: workRef },
+              { name: "Skills", ref: skillsRef },
+              { name: "Contact", ref: contactRef }
+            ].map((item, index) => (
+              <motion.button
+                key={item.name}
+                onClick={() => scrollToSection(item.ref)}
+                className="text-sm text-white/60 hover:text-white/100 transition-colors bg-transparent border-none cursor-pointer"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {item.name}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            aria-label="Toggle menu"
+          >
+            <span className={`w-6 h-0.5 bg-white/60 transition-transform ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-white/60 transition-opacity ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-white/60 transition-transform ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-md border-b border-white/5 py-4"
+          >
+            <div className="flex flex-col items-center gap-4">
+              {[
+                { name: "Home", ref: homeRef },
+                { name: "About", ref: aboutRef },
+                { name: "Work", ref: workRef },
+                { name: "Skills", ref: skillsRef },
+                { name: "Contact", ref: contactRef }
+              ].map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.ref)}
+                  className="text-white/60 hover:text-white/100 transition-colors bg-transparent border-none py-3 px-6 w-full text-center"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </nav>
 
       {/* HERO SECTION */}
       <section
@@ -185,7 +238,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
               { href: "https://github.com/Aayushpratapsingh", icon: <Github size={18}/> },
               { href: "https://www.linkedin.com/in/aayush-singh-16287b321/", icon: <Linkedin size={18}/> },
               { href: "mailto:aayushpratapsingh098@gmail.com", icon: <Mail size={18}/> },
-              { href: "#", icon: <Instagram size={18}/> },
+              { href: "https://www.instagram.com", icon: <Instagram size={18}/> },
             ].map((link, i) => (
               <motion.a
                 key={i}
@@ -213,7 +266,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
             initial={{ height: 0 }}
             animate={{ height: 128 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="absolute -top-32 left-1/2 -translate-x-1/2 w-0.5 bg-linear-to-b from-white/40 to-transparent"
+            className="absolute -top-32 left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b from-white/40 to-transparent"
           />
           <motion.div
             initial={{ scale: 0 }}
@@ -230,12 +283,12 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-72 h-100 rounded-3xl shadow-2xl relative bg-linear-to-br from-white/10 via-white/5 to-white/0 overflow-hidden"
+              className="w-72 h-[400px] rounded-3xl shadow-2xl relative bg-gradient-to-br from-white/10 via-white/5 to-white/0 overflow-hidden"
             >
               {/* Card Content */}
               <div className="relative h-full flex flex-col items-center p-8">
                 <div className="mt-4 relative">
-                  <div className="absolute inset-0 rounded-full bg-linear-to-br from-gray-200 to-gray-300 blur-sm"></div>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 blur-sm"></div>
                   <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <img src="/images/profile.jpeg" alt="Aayush Singh - Profile" className="w-full h-full object-cover"/>
                   </div>
@@ -446,26 +499,25 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
         </div>
       </section>
 
-     {/* WORK SECTION */}
-<section ref={workRef} id="work" className="py-32 px-6 bg-white/[0.01] w-full">
-  <div className="max-w-7xl mx-auto">
-    {/* Section Header - Centered */}
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="mb-16 text-center"
-    >
-      <span className="text-white/50 text-sm tracking-widest">MY WORK</span>
-      <h2 className="text-4xl md:text-5xl font-light mt-4">
-        Recent <span className="text-white/90">Projects</span>
-      </h2>
-    
-    </motion.div>
-    
-    <EventCards3D projects={projects} />
-  </div>
-</section>
+      {/* WORK SECTION */}
+      <section ref={workRef} id="work" className="py-32 px-6 bg-white/[0.01] w-full">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header - Centered */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-16 text-center"
+          >
+            <span className="text-white/50 text-sm tracking-widest">MY WORK</span>
+            <h2 className="text-4xl md:text-5xl font-light mt-4">
+              Recent <span className="text-white/90">Projects</span>
+            </h2>
+          </motion.div>
+          
+          <EventCards3D projects={projects} />
+        </div>
+      </section>
 
       {/* SKILLS SECTION */}
       <section ref={skillsRef} id="skills" className="py-32 px-6 w-full">
@@ -494,10 +546,10 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
               >
                 <div className="absolute inset-0 bg-white/5 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-center">
-                  <div className="text-white/30 group-hover:text-white/100 transition-colors mb-3">
+                  <div className="text-white/30 group-hover:text-white transition-colors mb-3">
                     {skill.icon}
                   </div>
-                  <h3 className="text-xs font-light text-white/600">{skill.name}</h3>
+                  <h3 className="text-xs font-light text-white/100">{skill.name}</h3>
                 </div>
               </motion.div>
             ))}
