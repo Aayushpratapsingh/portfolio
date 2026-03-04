@@ -200,7 +200,7 @@ export default function Home() {
             className="mb-4"
           >
             <span className="uppercase text-yellow-400 text-sm tracking-[0.3em] font-medium">
-              Full-Stack Developer
+              UI/UX FRONTEND DEVELOPER
             </span>
           </motion.div>
 
@@ -296,7 +296,7 @@ export default function Home() {
 
                 <div className="text-center mt-6">
                   <h3 className="text-2xl font-medium text-gray-200">Aayush Singh</h3>
-                  <p className="text-sm text-gray-400 mt-2 tracking-wide">FULL STACK DEVELOPER</p>
+                  <p className="text-sm text-gray-400 mt-2 tracking-wide">UI/UX FRONTEND DEVELOPER</p>
                 </div>
 
                 <div className="w-12 h-px bg-gray-400 my-6"></div>
@@ -343,7 +343,7 @@ export default function Home() {
               {/* Bio */}
               <div className="space-y-4">
                 <p className="text-white/70 text-lg leading-relaxed">
-                  I'm a <span className="text-white">BCA student</span> with a deep passion for full-stack development and creative UI design. I believe in building applications that not only function perfectly but also provide exceptional user experiences.
+                  I'm a <span className="text-white">BCA student</span> with a deep passion for front-end development and creative UI design. I believe in building applications that not only function perfectly but also provide exceptional user experiences.
                 </p>
                 
                 <p className="text-white/50 leading-relaxed">
@@ -467,7 +467,7 @@ export default function Home() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <p className="text-white/70 text-sm">Next.js & TypeScript</p>
-                      <span className="text-white/30 text-xs">75%</span>
+                      <span className="text-white/30 text-xs">55%</span>
                     </div>
                     <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
                       <motion.div 
