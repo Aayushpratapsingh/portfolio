@@ -272,7 +272,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
             transition={{ duration: 0.6 }}
             className="mb-16"
           >
-            <span className="text-white/20 text-sm tracking-widest">ABOUT ME</span>
+            <span className="text-white/50 text-sm tracking-widest">ABOUT ME</span>
             <h2 className="text-4xl md:text-5xl font-light mt-4">
               Who is <span className="text-white/90">Aayush?</span>
             </h2>
@@ -446,12 +446,26 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
         </div>
       </section>
 
-      {/* WORK SECTION */}
-      <section ref={workRef} id="work" className="py-32 px-6 bg-white/[0.01] w-full">
-        <div className="max-w-7xl mx-auto">
-          <EventCards3D projects={projects} />
-        </div>
-      </section>
+     {/* WORK SECTION */}
+<section ref={workRef} id="work" className="py-32 px-6 bg-white/[0.01] w-full">
+  <div className="max-w-7xl mx-auto">
+    {/* Section Header - Centered */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="mb-16 text-center"
+    >
+      <span className="text-white/50 text-sm tracking-widest">MY WORK</span>
+      <h2 className="text-4xl md:text-5xl font-light mt-4">
+        Recent <span className="text-white/90">Projects</span>
+      </h2>
+    
+    </motion.div>
+    
+    <EventCards3D projects={projects} />
+  </div>
+</section>
 
       {/* SKILLS SECTION */}
       <section ref={skillsRef} id="skills" className="py-32 px-6 w-full">
@@ -462,7 +476,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
             transition={{ duration: 0.6 }}
             className="mb-16"
           >
-            <span className="text-white/20 text-sm tracking-widest">EXPERTISE</span>
+            <span className="text-white/50 text-sm tracking-widest">EXPERTISE</span>
             <h2 className="text-4xl md:text-5xl font-light mt-4">
               Technologies I work with
             </h2>
@@ -475,15 +489,15 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -5 }}
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-white/5 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 text-center">
-                  <div className="text-white/30 group-hover:text-white/50 transition-colors mb-3">
+                  <div className="text-white/30 group-hover:text-white/100 transition-colors mb-3">
                     {skill.icon}
                   </div>
-                  <h3 className="text-xs font-light text-white/30">{skill.name}</h3>
+                  <h3 className="text-xs font-light text-white/600">{skill.name}</h3>
                 </div>
               </motion.div>
             ))}
@@ -499,7 +513,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-white/20 text-sm tracking-widest">GET IN TOUCH</span>
+            <span className="text-white/50 text-sm tracking-widest">GET IN TOUCH</span>
             <h2 className="text-4xl md:text-5xl font-light mt-4 mb-8">
               Let's work together
             </h2>
@@ -547,8 +561,8 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLElement | null>) => {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-8 px-6 border-t border-white/5 w-full">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/20">
+      <footer className="py-8 px-6 border-t border-white/20 w-full">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
           <p>© 2024 Aayush Pratap Singh</p>
           <div className="flex gap-6">
             <span>Clean code</span>
